@@ -1,26 +1,91 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: "Helvetica";
+  src: url("/fonts/Helvetica.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Helvetica";
+  src: url("/fonts/Helvetica-Light.woff2") format("woff2");
+  font-weight: 300;
+  font-style: normal;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --main-white: #f9f9f9;
+  --main-black: #1c1c1d;
+  --main-aqua: #38A19D;
+  --gray-secondary: #F2F2F2;
+
+  --base-border-radius: 32px
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+@theme {
+  --color-main_white: var(--main-white);
+  --color-main_black: var(--main-black);
+  --color-main_aqua: var(--main-aqua);
+  --color-secondary: var(--gray-secondary);
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --radius-base_border_radius: var(--base-border-radius);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--main-white);
+  color: var(--main-black);
+  font-family: Helvetica, sans-serif;
 }
+
+main{
+  margin-left: auto;
+  margin-right: auto;
+  padding-bottom: 150px;
+}
+
+.swiper-wrapper {
+  display: flex;
+  align-items: center; 
+}
+
+
+.loader {
+  width: 48px;
+  height: 48px;
+  border: 2px solid #FFF;
+  border-radius: 50%;
+  display: inline-block;
+  position: relative;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+.loader::after,
+.loader::before {
+  content: '';  
+  box-sizing: border-box;
+  position: absolute;
+  left: 0;
+  top: 0;
+  background: var(--main-aqua);
+  width: 6px;
+  height: 6px;
+  transform: translate(150%, 150%);
+  border-radius: 50%;
+}
+.loader::before {
+  left: auto;
+  top: auto;
+  right: 0;
+  bottom: 0;
+  transform: translate(-150%, -150%);
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+} 
