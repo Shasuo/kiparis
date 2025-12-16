@@ -5,7 +5,10 @@ import { SearchInput } from "@/components/basic/SearchInput";
 import { SectionHeadline } from "@/components/basic/SectionHeadline";
 import { MainModalForm } from "@/components/big/MainModalForm";
 import { ModalWindow } from "@/components/big/ModalWindow";
-import { isMainModalFormOpen, isMainModalFormProcedurePreset } from "@/Jotay/atoms";
+import {
+  isMainModalFormOpen,
+  isMainModalFormProcedurePreset,
+} from "@/Jotay/atoms";
 import classNames from "classnames";
 import { useAtom } from "jotai";
 import { useState } from "react";
@@ -98,7 +101,11 @@ const CatalogItem = ({ items, onClick }: CatalogItemProps) => {
         "text-base font-normal cursor-pointer",
         "hover:bg-main_black/5 active:bg-main_black/5"
       )}
-      onClick={() => onClick(items[0].name)}
+      onClick={(e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        onClick(items[0].name);
+      }}
     >
       {items.map((item, index) => (
         <div
@@ -149,36 +156,36 @@ export const Catalog = () => {
   };
   return (
     <section className="flex flex-col gap-6">
-        <div className="text-center font-normal flex flex-col gap-1">
-          <SectionHeadline text="Каталог и цены" />
-          <div className="text-sm">Нажмите на процедуру для записи</div>
-        </div>
-        <SearchInput
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-        />
+      <div className="text-center font-normal flex flex-col gap-1">
+        <SectionHeadline text="Каталог и цены" />
+        <div className="text-sm">Нажмите на процедуру для записи</div>
+      </div>
+      <SearchInput
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
+      />
 
-        <section
-          className={classNames(
-            "rounded-base_border_radius bg-secondary box-border p-6 mx-auto",
-            "flex flex-col gap-4",
-            "max-w-[800px] w-full"
-          )}
-        >
-          {filteredPositions.length > 0 ? (
-            filteredPositions.map((position, index) => (
-              <CatalogItem
-                key={index}
-                items={position}
-                onClick={(procedureName: string) =>
-                  handlePresetModalOpen(procedureName)
-                }
-              />
-            ))
-          ) : (
-            <div className="text-center text-base">Ничего не найдено</div>
-          )}
-        </section>
+      <section
+        className={classNames(
+          "rounded-base_border_radius bg-secondary box-border p-6 mx-auto",
+          "flex flex-col gap-4",
+          "max-w-[800px] w-full"
+        )}
+      >
+        {filteredPositions.length > 0 ? (
+          filteredPositions.map((position, index) => (
+            <CatalogItem
+              key={index}
+              items={position}
+              onClick={(procedureName: string) =>
+                handlePresetModalOpen(procedureName)
+              }
+            />
+          ))
+        ) : (
+          <div className="text-center text-base">Ничего не найдено</div>
+        )}
       </section>
+    </section>
   );
 };

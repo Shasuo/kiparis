@@ -12,6 +12,11 @@ export const closeAllModals = atom(null, (get, set) => {
   set(isMainModalFormOpen, false);
 });
 
+export const toggleMobileMenu = atom(null, (get, set) => {
+  set(closeAllModals);
+  set(isMainMenuOpen, !get(isMainMenuOpen));
+});
+
 export const openMainModalForm = atom(null, (get, set) => {
   set(closeAllModals);
   set(isMainModalFormOpen, true);

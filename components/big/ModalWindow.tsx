@@ -15,7 +15,6 @@ export const ModalWindow = ({
 }: ModalWindowProps) => {
   const contentRef = useRef<HTMLDivElement | null>(null);
 
-  useClickOutside(isActive ? contentRef : null, onClose);
   return (
     <section
       className={classNames(
@@ -28,10 +27,11 @@ export const ModalWindow = ({
           : "opacity-0 pointer-events-none"
       )}
     >
+      <div className="absolute w-full h-full" onClick={onClose} />
       <div
         ref={contentRef}
         className={classNames(
-          "bg-main_white box-border p-6 rounded-base_border_radius",
+          "bg-main_white box-border p-6 rounded-base_border_radius relative z-10",
           "mx-auto mt-[100px] lg:max-w-[500px] w-full"
         )}
       >
@@ -39,10 +39,11 @@ export const ModalWindow = ({
       </div>
       <div
         className={classNames(
-          "text-base font-light text-center bg-secondary mt-6 cursor-pointer",
+          "text-base font-light text-center bg-secondary mt-6 cursor-pointer relative z-10",
           "py-4 px-6 box-border rounded-base_border_radius lg:max-w-[500px] mx-auto",
           "hover:opacity-88 active:opacity-60"
         )}
+        onClick={onClose}
       >
         Закрыть
       </div>
