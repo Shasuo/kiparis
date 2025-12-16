@@ -4,7 +4,11 @@ import { ContactButton } from "../basic/ContactButton";
 import { useActiveSection } from "@/hooks/useActiveSection";
 import { useScrollToSection } from "@/hooks/useScrollToSection";
 import { useAtom } from "jotai";
-import { isMainMenuOpen, openMainModalForm, toggleMobileMenu } from "@/Jotay/atoms";
+import {
+  isMainMenuOpen,
+  openMainModalForm,
+  openMobileMenu,
+} from "@/Jotay/atoms";
 
 interface HeaderButtonProps {
   text: string;
@@ -56,7 +60,7 @@ export const Header = () => {
   );
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useAtom(isMainMenuOpen);
 
-  const [, setToggleMobileMenu] = useAtom(toggleMobileMenu);
+  const [, setOpenMobileMenu] = useAtom(openMobileMenu);
 
   const activeSection = useActiveSection(mainMenuButtons);
   const scrollToSection = useScrollToSection();
@@ -70,9 +74,10 @@ export const Header = () => {
     handleMenuButtonClick(id);
   };
 
-  useEffect(() => {
-    setActiveButton(activeSection);
-  }, [activeSection]);
+  const handleBurgerClick = () =>
+    isMobileMenuOpen ? setIsMobileMenuOpen(false) : setOpenMobileMenu();
+
+  useEffect(() => setActiveButton(activeSection), [activeSection]);
 
   return (
     <>
@@ -87,7 +92,7 @@ export const Header = () => {
       >
         <div
           className="absolute w-full h-full lg:hidden"
-          onClick={setToggleMobileMenu}
+          onClick={handleBurgerClick}
         />
         {!isMobileMenuOpen && (
           <img
