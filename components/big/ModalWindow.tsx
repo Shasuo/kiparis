@@ -27,7 +27,7 @@ export const ModalWindow = ({
           : "opacity-0 pointer-events-none"
       )}
     >
-      <div className="absolute w-full h-full" onClick={onClose} />
+      <div className="absolute w-full h-full left-0 top-0" onClick={onClose} />
       <div
         ref={contentRef}
         className={classNames(
